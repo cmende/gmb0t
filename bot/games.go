@@ -33,6 +33,13 @@ func startGame() {
 	game := rand.Intn(len(Games))
 	currentGame = Games[game]
 	fmt.Printf("Starting game: %s\n", currentGame.Name)
+
+	// shuffle players before starting (Fisher-Yates shuffle)
+	for i := range players {
+		j := rand.Intn(i + 1)
+		players[i], players[j] = players[j], players[i]
+	}
+
 	currentGame.StartCallback(players)
 	gameActive = true
 }
