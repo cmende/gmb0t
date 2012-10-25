@@ -6,18 +6,18 @@ import (
 )
 
 type GameInfo struct {
-	name           string
-	startCallback  func(players []string)
-	actionCallback func(sender, action string)
+	Name           string
+	StartCallback  func(players []string)
+	ActionCallback func(sender, action string)
 }
 
-var games []GameInfo
+var Games []GameInfo
 var currentGame GameInfo
 var gameActive bool = false
 var players []string
 
 func RegisterGame(game GameInfo) {
-	games = append(games, game)
+	Games = append(Games, game)
 }
 
 func startGame() {
@@ -25,15 +25,15 @@ func startGame() {
 		fmt.Println("Error: not enough players")
 		return
 	}
-	if len(games) < 1 {
+	if len(Games) < 1 {
 		fmt.Println("Error: no games loaded")
 		return
 	}
 
-	game := rand.Intn(len(games))
-	currentGame = games[game]
-	fmt.Printf("Starting game: %s\n", currentGame.name)
-	currentGame.startCallback(players)
+	game := rand.Intn(len(Games))
+	currentGame = Games[game]
+	fmt.Printf("Starting game: %s\n", currentGame.Name)
+	currentGame.StartCallback(players)
 	gameActive = true
 }
 
@@ -56,7 +56,7 @@ func parseCommands() {
 			}
 		default:
 			if gameActive {
-				go currentGame.actionCallback(nick, command)
+				go currentGame.ActionCallback(nick, command)
 			} else {
 				fmt.Println("Error: no current game")
 			}
