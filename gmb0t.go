@@ -1,9 +1,9 @@
 package main
 
 import (
-	"time"
-	"math/rand"
 	"github.com/cmende/gmb0t/bot"
+	"math/rand"
+	"time"
 )
 
 func main() {

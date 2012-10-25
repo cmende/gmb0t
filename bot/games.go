@@ -1,26 +1,31 @@
 package bot
 
 import (
-	"math/rand"
 	"fmt"
+	"math/rand"
 )
 
 type GameInfo struct {
-	name string
-	startCallback func()
+	name           string
+	startCallback  func(players []string)
 	actionCallback func(sender, action string)
 }
 
 var games []GameInfo
 var currentGame GameInfo
 var gameActive bool = false
+var players []string
 
 func RegisterGame(game GameInfo) {
 	games = append(games, game)
 }
 
 func startGame() {
-	if (len(games) < 1) {
+	if len(players) < 2 {
+		fmt.Println("Error: not enough players")
+		return
+	}
+	if len(games) < 1 {
 		fmt.Println("Error: no games loaded")
 		return
 	}
@@ -28,7 +33,7 @@ func startGame() {
 	game := rand.Intn(len(games))
 	currentGame = games[game]
 	fmt.Printf("Starting game: %s\n", currentGame.name)
-	currentGame.startCallback()
+	currentGame.startCallback(players)
 	gameActive = true
 }
 
@@ -42,6 +47,8 @@ func parseCommands() {
 		switch command {
 		case "start":
 			startGame()
+		case "register":
+			players = append(players, nick)
 		default:
 			if gameActive {
 				go currentGame.actionCallback(nick, command)
