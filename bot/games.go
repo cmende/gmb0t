@@ -49,6 +49,11 @@ func parseCommands() {
 			startGame()
 		case "register":
 			players = append(players, nick)
+			if gameActive {
+				Notice(nick, "ok gameinprogress")
+			} else {
+				Notice(nick, "ok")
+			}
 		default:
 			if gameActive {
 				go currentGame.actionCallback(nick, command)
