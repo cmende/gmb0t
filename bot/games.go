@@ -11,10 +11,12 @@ type GameInfo struct {
 	ActionCallback func(sender, action string)
 }
 
-var Games []GameInfo
-var currentGame GameInfo
-var gameActive bool = false
-var players []string
+var (
+	Games []GameInfo
+	currentGame GameInfo
+	gameActive = false
+	players []string
+)
 
 func RegisterGame(game GameInfo) {
 	Games = append(Games, game)

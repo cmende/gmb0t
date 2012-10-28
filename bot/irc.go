@@ -4,12 +4,14 @@ import (
 	irc "github.com/fluffle/goirc/client"
 )
 
-var Quit chan bool = make(chan bool)
-var commands chan []string = make(chan []string)
+var (
+	Quit = make(chan bool)
+	commands = make(chan []string)
 
-var server string = "irc.freenode.net"
-var channel string = "##b0tgames"
-var conn *irc.Conn
+	server = "irc.freenode.net"
+	channel = "##b0tgames"
+	conn *irc.Conn
+)
 
 func Connect() {
 	conn = irc.SimpleClient("gmb0t", "gmb0t", "Game Master")
