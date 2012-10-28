@@ -47,8 +47,7 @@ func startGame() {
 }
 
 func parseCommands() {
-	for {
-		line := <-commands
+	for line := range commands {
 		nick := line[0]
 		command := line[1]
 		fmt.Printf("<%s> %s\n", nick, command)
